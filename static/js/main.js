@@ -21,11 +21,12 @@ class PowerSource {
       document.getElementById(this.display).innerHTML = `<h1">${this.name}</h1>
       <h2 id="${this.name + '_voltage'}">V: ${this.voltage_l1 === '' ? 0 : this.voltage_l1} volts</h2>
       <h2 id="${this.name + '_current'}">A: ${0} amps</h2>
-      <h2 id="${this.name + '_frecuency'}">F: ${this.frecuency} Hz</h2>`;      
+      <h2 id="${this.name + '_frecuency'}">F: ${this.frecuency} Hz</h2>`;
    }
 }
 
 function init() {
+   console.log('loaded')
    let cmds = [
       ':SHORe:ON',
        ':SHORe:OFF',
@@ -39,6 +40,120 @@ function init() {
    let generator1 = new PowerSource('Port gen', 'port_display');
    let generator2 = new PowerSource('STBD gen', 'stbd_display');
    let converter = new PowerSource('Converter', 'converter_display');
+
+   let shore_on = document.getElementById('shore_on');
+   let shore_off = document.getElementById('shore_off');
+   let turn_on = document.getElementById('turn_on');
+   let turn_off = document.getElementById('turn_off');
+   let transfer_to_gen = document.getElementById('transfer_to_gen');
+   let transfer_to_shore = document.getElementById('transfer_to_shore');
+   let port_master = document.getElementById('port_master');
+   let stbd_master = document.getElementById('stbd_master');
+
+   shore_on.addEventListener('click', function () {
+      (async () => {
+         const rawResponse = await fetch('/push_cmd', {
+           method: 'POST',
+           headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+           },
+           body: JSON.stringify({'cmds': [':SHORe:ON']})
+         });
+         const content = await rawResponse.json();
+       })();
+   });
+   shore_off.addEventListener('click', function () {
+      (async () => {
+         const rawResponse = await fetch('/push_cmd', {
+           method: 'POST',
+           headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+           },
+           body: JSON.stringify({'cmds': [':SHORe:OFF']})
+         });
+         const content = await rawResponse.json();
+       })();
+   });
+   turn_on.addEventListener('click', function () {
+      (async () => {
+         const rawResponse = await fetch('/push_cmd', {
+           method: 'POST',
+           headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+           },
+           body: JSON.stringify({'cmds': [':CONVerter:ON']})
+         });
+         const content = await rawResponse.json();
+       })();
+   });
+   turn_off.addEventListener('click', function () {
+      (async () => {
+         const rawResponse = await fetch('/push_cmd', {
+           method: 'POST',
+           headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+           },
+           body: JSON.stringify({'cmds': [':CONVerter:OFF']})
+         });
+         const content = await rawResponse.json();
+       })();
+   });
+   transfer_to_gen.addEventListener('click', function () {
+      (async () => {
+         const rawResponse = await fetch('/push_cmd', {
+           method: 'POST',
+           headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+           },
+           body: JSON.stringify({'cmds': [':TS:GENerator:ON']})
+         });
+         const content = await rawResponse.json();
+       })();
+   });
+   transfer_to_shore.addEventListener('click', function () {
+      (async () => {
+         const rawResponse = await fetch('/push_cmd', {
+           method: 'POST',
+           headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+           },
+           body: JSON.stringify({'cmds': [':TS:CONVerter:ON']})
+         });
+         const content = await rawResponse.json();
+       })();
+   });
+   port_master.addEventListener('click', function () {
+      (async () => {
+         const rawResponse = await fetch('/push_cmd', {
+           method: 'POST',
+           headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+           },
+           body: JSON.stringify({'cmds': [':TS:G1:MASTer']})
+         });
+         const content = await rawResponse.json();
+       })();
+   });
+   stbd_master.addEventListener('click', function () {
+      (async () => {
+         const rawResponse = await fetch('/push_cmd', {
+           method: 'POST',
+           headers: {
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+           },
+           body: JSON.stringify({'cmds': [':TS:G2:MASTer']})
+         });
+         const content = await rawResponse.json();
+       })();
+   });
 
    setInterval(function() {
       const fetchPromise = fetch("/get_status");
@@ -78,17 +193,52 @@ function init() {
 
       });
    }, 1000);
-   setInterval(function() {
-      (async () => {
-         const rawResponse = await fetch('/push_cmd', {
-           method: 'POST',
-           headers: {
-             'Accept': 'application/json',
-             'Content-Type': 'application/json'
-           },
-           body: JSON.stringify({'cmds': [':SHORe:ON', [':CONVerter:ON']]})
-         });
-         const content = await rawResponse.json();
-       })();
-   }, 3000)
+
 }
+
+// window.onload = init;
+//
+// function init() {
+//   var bMobile =   // will be true if running on a mobile device
+//   navigator.userAgent.indexOf( "Mobile" ) !== -1 ||
+//   navigator.userAgent.indexOf( "iPhone" ) !== -1 ||
+//   navigator.userAgent.indexOf( "iPad" ) !== -1 ||
+//   navigator.userAgent.indexOf( "Android" ) !== -1 ||
+//   navigator.userAgent.indexOf( "Windows Phone" ) !== -1 ;
+//
+//   let switch_pos = 0;
+//   const main_panel = document.querySelector('.main_container');
+//   const shore_switch = document.querySelector('#shore_switch');
+//   const port_switch = document.querySelector('#port_switch');
+//   const stbd_switch = document.querySelector('#stbd_switch');
+//
+//   setInterval(function() {
+//     if(bMobile) {
+//       if(!(window.innerHeight > window.innerWidth)){
+//     main_panel.style.height = '40vw';
+// } else {
+//         main_panel.style.height = '180vw';
+//       }
+//     }
+//     if(!bMobile) {
+//       let rel = main_panel.offsetWidth;
+//       main_panel.style.height = `${1/rel * 53082}vw`;
+//     }
+//     if(switch_pos < 91) {
+//       if(switch_pos < 20) {
+//         shore_switch.style.backgroundColor = 'green';
+//       } else {
+//         shore_switch.style.backgroundColor = 'white';
+//       }
+//       switch_pos++;
+//       shore_switch.style.transform = `rotate(${`${switch_pos}deg`})`;
+//       port_switch.style.transform = `rotate(${`${switch_pos}deg`})`;
+//       stbd_switch.style.transform = `rotate(${`${switch_pos}deg`})`;
+//     } else {
+//       switch_pos = 0;
+//     }
+//
+//   }, 100);
+//
+//
+// }

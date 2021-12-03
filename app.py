@@ -14,7 +14,7 @@ count = 0
 class SerialInterface:
     def __init__(self):
         self.baudrate = 19200
-        self.port = 'COM4'
+        self.port = 'COM5'
         self.cmds = [
             {'Shore recuency': ':MEASure:SP1:FREQuency'},
             {'Shore L1 voltage': ':MEASure:SP1:VLL1 '},
@@ -105,6 +105,7 @@ def push_smd():
 @app.route('/get_status', methods=['POST', 'GET'])
 def get_status():
     global ser_interface
+    print('getting status')
 
     data = ser_interface.values
 
@@ -117,7 +118,7 @@ def get_status():
 
 @app.route('/')
 def hello_world():
-    return render_template('index2.html')
+    return render_template('index.html')
 
 
 if __name__ == '__main__':

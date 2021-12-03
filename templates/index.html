@@ -1,51 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Asea PMS</title>
-    <link rel="stylesheet" href="../static/css/styles.css">
-</head>
-<body>
-<div class="main_container">
-    <div class="top_bar"></div>
-    <div class="power_source_status">
-        <div id="port_display" class="port_status">
-            
-        </div>
-        <div id="converter_display" class="converter_status">
-            
-        </div>
-        <div id="stbd_display" class="stbd_status">
-            
-        </div>
-    </div>
-    <div class="selector">
-        <div class="wrapper">
+<link rel="stylesheet" href="../static/css/main.css">
 
-            <div class="menu">
-              <a href="#" class="one">G1</a>
-              <a href="#" class="two">SHO</a>
-              <a href="#" class="three">G2</a>
-              <a href="#" class="four">PAR</a>
-        
-              <div class="circle">
-                <ul>
-                  <li>G1</li>
-                  <li>SH</li>
-                  <li>G2</li>
-                  <li>PAR</li>
-                </ul>
-              </div>
-        
-            </div>
-          </div>
-    </div>
-    <div class="main_bus"></div>
-    <div id="switchboard">
-        <div class="modal"></div>
-    </div>
-    <div class="footer_bar"></div>
+<div class="power_container">
+    <div class="power_device" id="port_display"></div>
+<div class="power_device" id="stbd_display"></div>
+<div class="power_device" id="converter_display"></div>
 </div>
+<div class="btn_container">
+    <button id="shore_on">Shore</button>
+    <button id="shore_off">Shore off</button>
+    <button id="turn_on">ON</button>
+    <button id="turn_off">OFF</button>
+    <button id="transfer_to_gen">Transfer to gen</button>
+    <button id="transfer_to_shore">Transfer to shore</button>
+    <button id="port_master">Port master</button>
+    <button id="stbd_master">STBD master</button>
+</div>
+
 <script src="../static/js/main.js"></script>
-</body>
-</html>

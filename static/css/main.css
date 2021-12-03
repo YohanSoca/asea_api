@@ -1,0 +1,29 @@
+body {
+    background-color: #333333;
+    color: white;
+    padding: 0;
+    margin: 0;
+}
+
+.power_container {
+
+    display: flex;
+    justify-content: space-around;
+}
+
+.power_device {
+    width: 200px;
+    height: 300px;
+    background-color: rgba(66, 0, 0, 1);
+}
+
+.btn_container {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    background-color: green;
+    width: 100px;
+    color: white;
+}
